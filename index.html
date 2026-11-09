@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reto25N · Escucha. Protege. Conecta.</title>
+<style>
+:root{--ink:#3a2314;--sub:#7a5a44;--or:#c2530a;--orbg:#ffeedd;--bg:#fff8f1;--line:#f1d9c2;--ok:#1d7a4d;--okbg:#e3f3ea;--bad:#b3261e;--badbg:#fbeae9;--head:"Avenir Next","Trebuchet MS","Segoe UI",system-ui,sans-serif}
+@media(prefers-color-scheme:dark){:root{--ink:#fff1e6;--sub:#d9b99f;--or:#ffa95c;--orbg:#4a2a12;--bg:#1f130b;--line:#4d3320;--ok:#6fd7a0;--okbg:#14301f;--bad:#ff8f87;--badbg:#3a1a19}}
+@media(prefers-color-scheme:dark){button:not(.ghost):not(.chat){color:#2a1608}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:660px;margin:0 auto;padding:20px 18px 60px}
+h1,h2{font-family:var(--head);font-weight:800;letter-spacing:-.015em;line-height:1.12;margin:.2em 0 .4em}h1{font-size:2.5rem}h2{font-size:1.6rem;display:inline-block;border-bottom:4px solid var(--or);padding-bottom:2px}
+p{margin:.6em 0;max-width:62ch}
+.top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;padding:10px 18px;border-bottom:4px solid;border-image:linear-gradient(90deg,#f6b26b,#f08a1c,#c2530a,#ff9a3c) 1;font-size:.9rem}
+.top strong{font-family:var(--head)}
+.keys{display:flex;gap:6px;flex-wrap:wrap}
+.key{font-family:var(--head);padding:2px 10px;border:2px dashed var(--line);border-radius:99px;font-weight:700;min-width:84px;text-align:center;color:var(--sub)}
+.key.on{border:2px solid var(--or);background:var(--orbg);color:var(--or);animation:pop .6s both}
+button,select,input{font:inherit;color:inherit}
+button{font-family:var(--head);cursor:pointer;border:0;border-radius:8px;padding:11px 18px;background:var(--or);color:#fff;font-weight:700;transition:transform .15s,box-shadow .15s}
+button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(20,30,80,.22)}
+button.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)}
+button.sm{padding:6px 12px;font-size:.9rem}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+input[type=text],select{width:100%;padding:10px;border:2px solid var(--line);border-radius:8px;background:var(--bg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.msg{padding:12px 14px;border-radius:8px;margin:14px 0}
+.ok{background:var(--okbg);color:var(--ok)}.bad{background:var(--badbg);color:var(--bad)}
+.hint{background:var(--orbg);border-left:4px solid var(--or)}
+.hint::before{content:"💡 "}.aviso::before{content:"🫶 "}.ok::before{content:"✅ "}.bad::before{content:"🤔 "}
+.reward{font-family:Georgia,serif;font-style:italic;font-size:2.6rem;font-weight:700;color:var(--or);animation:pop .7s cubic-bezier(.2,1.4,.4,1) both}
+.case{font-family:Georgia,serif;font-size:1.06rem;background:var(--orbg);border-left:4px solid var(--or);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.doc{border:2px solid var(--line);border-radius:12px;padding:6px 12px;margin:14px 0}
+.chat{display:block;width:100%;text-align:left;background:transparent;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-weight:400;border:2px solid transparent;border-bottom:1px solid var(--line);border-radius:6px;padding:10px}
+.chat:hover{transform:none;box-shadow:none;border-color:var(--or)}
+.chat.sel{border:2px solid var(--or);background:var(--orbg);animation:wig .35s}
+.item{padding:12px 0;border-bottom:1px solid var(--line)}.item select{margin-top:8px}
+.chk{display:flex;gap:10px;padding:8px 0;cursor:pointer}.chk input{margin-top:6px;width:20px;height:20px;accent-color:var(--or)}
+.note{font-size:.88rem;color:var(--sub)}
+.lema{font-family:Georgia,serif;font-style:italic;font-size:1.2rem;color:var(--or)}
+.ill{display:block;width:100%;max-width:560px;height:auto;margin:0 0 12px;border-radius:16px;border:2px solid var(--line);background:linear-gradient(160deg,var(--orbg),var(--bg))}
+.flow{animation:flow 1.2s linear infinite}.bob{animation:bob 3.5s ease-in-out infinite}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pulse 1.8s ease-in-out infinite}.dot{animation:blink 1.2s infinite}
+@keyframes in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.3);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
+@keyframes wig{30%{transform:scale(1.02) rotate(-.6deg)}60%{transform:scale(1.02) rotate(.6deg)}}
+@keyframes bob{50%{transform:translateY(-7px)}}@keyframes pulse{50%{transform:scale(1.18)}}@keyframes blink{50%{opacity:.2}}
+@keyframes flow{to{stroke-dashoffset:-32}}@keyframes fall{to{transform:translateY(112vh) rotate(360deg)}}
+main>*:not(.reward){animation:in .45s ease both}main>*:nth-child(n+3){animation-delay:.08s}main>*:nth-child(n+6){animation-delay:.16s}
+.cf{position:fixed;top:-40px;pointer-events:none;z-index:9;animation:fall linear forwards}
+dialog{max-width:520px;width:calc(100% - 32px);border:2px solid var(--or);border-radius:12px;background:var(--bg);color:var(--ink);padding:20px}
+dialog::backdrop{background:rgba(20,10,40,.6)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{.top,button{display:none}}
+</style>
+</head>
+<body>
+<!-- Un solo archivo, sin internet, no guarda ni envía datos. El contenido está en la sección CONTENIDO del script y puede adaptarse al contexto local. -->
+<div class="top"><strong>Reto25N</strong><div class="keys" id="keys"></div></div>
+<main id="app"></main>
+<dialog id="pause"><h2>Tómate un momento</h2>
+<p>Este tema puede tocar experiencias cercanas. Puedes detenerte, cerrar la página y volver cuando quieras.</p>
+<div class="row"><button onclick="document.getElementById('pause').close()">Volver al reto</button></div></dialog>
+<script>
+/* ===== CONTENIDO ===== */
+const WORDS=["ESCUCHA","PROTEGE","CONECTA"],EMO=["👂","🛡️","🔗"];
+const R1=[
+ {t:"Pedirle que cuente todo desde el principio, con fechas y detalles.",ok:0},
+ {t:"Hacer una pausa y darle toda tu atención. Guardar el teléfono y dejar lo que estás haciendo.",ok:1},
+ {t:"Prometerle que nadie más lo va a saber.",ok:0},
+ {t:"Buscar un lugar privado donde pueda hablar con tranquilidad.",ok:1},
+ {t:"Llamar de inmediato a su supervisor para que se encargue.",ok:0},
+ {t:"Presentarte, decir cuál es tu rol y qué puedes y no puedes hacer.",ok:1},
+ {t:"Explicarle lo que crees que debería hacer.",ok:0},
+ {t:"Preguntar si hay algún riesgo inminente o urgente – si está a salvo ahora o si necesita atención médica.",ok:1}
+];
+const R2=[
+ {t:"“¿Estás segura de que fue así?”",a:"Evita",w:"Revictimiza. Mejor: “Lamento que esto haya pasado”."},
+ {t:"“Lamento que esto te haya pasado.”",a:"Practica",w:"Reconoce lo vivido sin juzgar ni interrogar."},
+ {t:"“Dime exactamente qué pasó, paso a paso.”",a:"Evita",w:"Es investigar, y puede hacerla revivir lo ocurrido."},
+ {t:"“No tienes que contarme qué pasó para que te explique opciones de apoyo.”",a:"Practica",w:"Separa la ayuda de la obligación de dar detalles."},
+ {t:"“Yo sé lo que puedes hacer: lo mejor es...”",a:"Evita",w:"Decide por ella. Se ofrecen opciones, no órdenes."},
+ {t:"“Gracias por confiar en mí.”",a:"Practica",w:"Reconoce su confianza y confirma que hablar fue seguro."}
+];
+const PATHS=["Sospecha de SEA","Mejorar programa de WFP","Sobreviviente de violencia","Niña o niño"];
+const R3=[
+ {t:"Explicarle tu obligación de reportar y qué información personal puede decidir revelar. Reportar al punto focal de PSEA y ofrecerle los apoyos organizacionales.",a:PATHS[0],w:"Sospecha de SEA: tu obligación de reportar no depende de que ella lo pida. Ella decide qué información personal revela."},
+ {t:"Con su consentimiento, compartir lo ocurrido a través del CFM o para ajustar el programa, sin dar detalles que comprometan su confidencialidad.",a:PATHS[1],w:"Mejorar el programa: solo con consentimiento, y sin entregar detalles que la expongan."},
+ {t:"Ofrecerle apoyo externo si ella lo desea. Es ella quien decide si lo busca. El propósito es apoyo y reparación.",a:PATHS[2],w:"Sobreviviente de violencia de género: siempre se ofrece apoyo, y siempre decide la persona."},
+ {t:"Pedir el consentimiento de su madre si no está implicada, o el asentimiento de la niña si lo está. Si hay riesgo de daño, referir a las autoridades aun sin consentimiento ni asentimiento.",a:PATHS[3],w:"Niña o niño: consentimiento o asentimiento según quién esté implicado, y ante riesgo de daño se refiere siempre."}
+];
+const COMPROMISOS=["Si una persona beneficiaria me pide ayuda, haré una pausa, buscaré privacidad y me presentaré.","Escucharé sin interrogar ni pedir detalles.","Conoceré la ruta de referencia, el canal de reporte y el CFM de mi oficina."];
+const ILL={
+route:`<svg class="ill" viewBox="0 0 600 130" role="img" aria-label="Ruta con tres paradas: escucha, protege, conecta"><path class="flow" d="M120 52 H480" stroke="var(--or)" stroke-width="4" stroke-dasharray="10 8" fill="none"/><g class="pulse"><circle cx="120" cy="52" r="32" fill="var(--or)"/></g><circle cx="300" cy="52" r="32" fill="var(--or)"/><circle cx="480" cy="52" r="32" fill="var(--or)"/><g font-size="30" text-anchor="middle"><text x="120" y="63">👂</text><text x="300" y="63">🛡️</text><text x="480" y="63">🔗</text></g><g font-size="16" text-anchor="middle" fill="var(--ink)" font-family="Georgia,serif" font-style="italic"><text x="120" y="118">Escucha</text><text x="300" y="118">Protege</text><text x="480" y="118">Conecta</text></g></svg>`,
+people:`<svg class="ill" viewBox="0 0 600 120" role="img" aria-label="Dos personas conversando"><circle cx="215" cy="42" r="20" fill="var(--or)"/><rect x="188" y="68" width="54" height="60" rx="26" fill="var(--or)"/><circle cx="385" cy="42" r="20" fill="var(--sub)"/><rect x="358" y="68" width="54" height="60" rx="26" fill="var(--sub)"/><ellipse cx="300" cy="32" rx="36" ry="20" fill="var(--orbg)" stroke="var(--or)" stroke-width="2"/><circle class="dot" cx="286" cy="32" r="3.5" fill="var(--or)"/><circle class="dot" style="animation-delay:.25s" cx="300" cy="32" r="3.5" fill="var(--or)"/><circle class="dot" style="animation-delay:.5s" cx="314" cy="32" r="3.5" fill="var(--or)"/></svg>`,
+chat:`<svg class="ill" viewBox="0 0 600 120" role="img" aria-label="Burbujas de conversación"><rect x="30" y="12" width="250" height="34" rx="14" fill="var(--orbg)" stroke="var(--or)" stroke-width="2"/><rect x="48" y="25" width="150" height="7" rx="3" fill="var(--sub)" opacity=".5"/><rect x="320" y="40" width="250" height="34" rx="14" fill="var(--or)"/><rect x="338" y="53" width="170" height="7" rx="3" fill="#fff" opacity=".8"/><rect x="30" y="68" width="200" height="34" rx="14" fill="var(--orbg)" stroke="var(--or)" stroke-width="2"/><rect x="48" y="81" width="110" height="7" rx="3" fill="var(--sub)" opacity=".5"/><path class="pulse" d="M300 70 c0-10 16-10 16 0 c0 10-16 16-16 26 c0-10-16-16-16-26 c0-10 16-10 16 0z" fill="var(--or)"/></svg>`,
+field:`<svg class="ill" viewBox="0 0 600 120" role="img" aria-label="Punto de distribución en terreno y un escudo"><circle cx="520" cy="30" r="16" fill="var(--or)" opacity=".5"/><path d="M0 120 V88 Q150 56 300 88 T600 82 V120 Z" fill="var(--or)" opacity=".3"/><rect x="220" y="62" width="34" height="30" fill="var(--or)"/><rect x="256" y="62" width="34" height="30" fill="var(--or)" opacity=".7"/><rect x="238" y="32" width="34" height="30" fill="var(--or)" opacity=".85"/><circle cx="350" cy="48" r="14" fill="var(--sub)"/><rect x="332" y="66" width="36" height="60" rx="18" fill="var(--sub)"/><circle cx="415" cy="54" r="12" fill="var(--or)"/><rect x="399" y="70" width="32" height="56" rx="16" fill="var(--or)"/><path class="pulse" d="M110 14 L142 25 V52 C142 72 126 82 110 90 C94 82 78 72 78 52 V25 Z" fill="var(--or)"/><polyline points="96,50 106,60 125,38" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+};
+/* ===== LÓGICA ===== */
+const app=document.getElementById("app");
+const st={name:"",keys:[false,false,false]};
+const $=h=>{app.innerHTML=h;window.scrollTo(0,0)};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const list=a=>"<ul>"+a.map(r=>`<li>${esc(r)}</li>`).join("")+"</ul>";
+const pb=`<button class="ghost sm" onclick="document.getElementById('pause').showModal()">🫶 Necesito una pausa</button>`;
+const actions=`<div id="hb"></div><div id="fb"></div>`;
+function keys(){document.getElementById("keys").innerHTML=WORDS.map((w,i)=>`<span class="key ${st.keys[i]?"on":""}">${st.keys[i]?EMO[i]+" "+w:"🔒 reto "+(i+1)}</span>`).join("")}
+function hintBtn(t){document.getElementById("h").onclick=()=>{document.getElementById("hb").innerHTML=`<div class="msg hint"><strong>Pista:</strong> ${t}</div>`}}
+function confetti(n){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;const E=["✨","🧡","🟠","🔶"];for(let i=0;i<n;i++){const e=document.createElement("span");e.className="cf";e.textContent=E[i%E.length];e.style.left=Math.random()*95+"vw";e.style.fontSize=(16+Math.random()*16)+"px";e.style.animationDuration=(2.5+Math.random()*2)+"s";e.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),5500)}}
+
+function intro(){
+ document.body.className="";
+ $(`${ILL.route}<h1>Reto25N</h1><p class="lema">Ruta de referencias seguras: Escucha. Protege. Conecta.</p>
+ <p>Por el 25N, Día Internacional de la Eliminación de la Violencia contra la Mujer, nuestra oficina pone en práctica rutas de referencia seguras.</p>
+ <p>Cuando alguien te pide ayuda, los primeros minutos importan. En tres retos practicarás cómo responder: <strong>escuchar</strong> sin investigar, <strong>proteger</strong> a la persona y <strong>conectarla</strong> con el apoyo correcto.</p>
+ <p>El reto lo haces a tu ritmo, en unos 5 minutos. No hay puntaje ni cronómetro, y nada de lo que respondas se guarda ni se envía.</p>
+ <div class="msg hint aviso">Aviso: el contenido trata sobre violencia contra las mujeres y la niñez. Puedes usar “Necesito una pausa” o cerrar la página en cualquier momento.</div>
+ <p><label for="n">Tu nombre (opcional, solo aparece en tu constancia final)</label></p>
+ <input type="text" id="n" maxlength="50" autocomplete="off">
+ <div class="row"><button id="go">Empezar el reto 1 🚀</button>${pb}</div>`);
+ document.getElementById("go").onclick=()=>{st.name=document.getElementById("n").value.trim();r1()};
+}
+
+function r1(){
+ document.body.className="r1";
+ $(`${ILL.people}<h2>👂 Reto 1: Escucha</h2>
+ <div class="case">Una persona en un punto de distribución se te acerca y dice en voz baja: “¿Tienes un minuto? Necesito ayuda.” Tienes 60 segundos para empezar bien. <strong>Marca las cuatro acciones correctas.</strong></div>
+ <div class="doc">${R1.map((x,i)=>`<button class="chat" data-i="${i}" aria-pressed="false">${esc(x.t)}</button>`).join("")}</div>
+ ${actions}<div class="row"><button id="chk">Comprobar ✔️</button><button class="ghost" id="h">💡 Pedir pista</button>${pb}</div>`);
+ document.querySelectorAll(".chat").forEach(b=>b.onclick=()=>{const s=b.classList.toggle("sel");b.setAttribute("aria-pressed",s)});
+ hintBtn("Los primeros 60 segundos no son para resolver el problema. Son para que la persona sienta que puede hablar y para saber si hay peligro ahora.");
+ document.getElementById("chk").onclick=()=>{
+  const sel=[...document.querySelectorAll(".chat")].map(b=>b.classList.contains("sel"));
+  const miss=R1.filter((x,i)=>x.ok&&!sel[i]).length,over=R1.filter((x,i)=>!x.ok&&sel[i]).length;
+  if(miss||over){document.getElementById("fb").innerHTML=`<div class="msg bad">${miss?`Te faltan ${miss} acción(es) correcta(s). `:""}${over?`Marcaste ${over} que no ayudan en este momento.`:""}</div>`;return}
+  win(0,"Los primeros 60 segundos no son para resolver: son para que la persona sienta que puede hablar y para detectar si hay peligro ahora.",["Pausa y atención total: evita la revictimización y asegura un enfoque centrado en la persona.","Privacidad: protege su seguridad y su dignidad.","Presentarte y explicar tu rol: es honesto sobre lo que puedes y no puedes hacer.","Chequear riesgos inminentes y urgentes: lo primero es que esté a salvo."],r2);
+ };
+}
+
+function r2(){
+ document.body.className="r2";
+ $(`${ILL.chat}<h2>🛡️ Reto 2: Protege</h2>
+ <p>Escuchar no es investigar. Clasifica cada frase: ¿la <strong>evitas</strong> o la <strong>practicas</strong>?</p>
+ ${R2.map((x,i)=>`<div class="item"><div>${esc(x.t)}</div><select id="s${i}" aria-label="Evita o practica"><option value="">Elige</option><option>Evita</option><option>Practica</option></select></div>`).join("")}
+ ${actions}<div class="row"><button id="chk">Comprobar ✔️</button><button class="ghost" id="h">💡 Pedir pista</button>${pb}</div>`);
+ hintBtn("Pregúntate: ¿esta frase pide detalles, duda de ella o decide por ella? Entonces se evita.");
+ document.getElementById("chk").onclick=()=>{
+  const bad=R2.filter((x,i)=>document.getElementById("s"+i).value!==x.a).length;
+  if(bad){document.getElementById("fb").innerHTML=`<div class="msg bad">${bad} sin acertar. Piensa en cómo se sentiría la persona al oírla.</div>`;return}
+  win(1,"Escuchar no es investigar: no necesitas saber exactamente qué pasó para explicar opciones de apoyo.",R2.map(x=>`${x.t} ${x.a}: ${x.w}`),r3);
+ };
+}
+
+function r3(){
+ document.body.className="r3";
+ $(`${ILL.field}<h2>🔗 Reto 3: Conecta</h2>
+ <div class="case">Al cierre de una distribución, una madre te cuenta en privado que un monitor de un socio le pidió favores sexuales para mantenerla en la lista de asistencia. Dice que también abordó a su hija de 15 años y que ella sufre violencia en su casa desde hace tiempo. Tiene miedo.</div>
+ <p><strong>Un caso, cuatro caminos que corren en paralelo.</strong> ¿A qué camino corresponde cada paso?</p>
+ ${R3.map((x,i)=>`<div class="item"><div>${esc(x.t)}</div><select id="p${i}" aria-label="Camino"><option value="">Elige un camino</option>${PATHS.map(p=>`<option>${p}</option>`).join("")}</select></div>`).join("")}
+ ${actions}<div class="row"><button id="chk">Comprobar ✔️</button><button class="ghost" id="h">💡 Pedir pista</button>${pb}</div>`);
+ hintBtn("Fíjate en la palabra clave de cada paso: reportar, programa o CFM, apoyo externo que ella decide, o consentimiento y asentimiento.");
+ document.getElementById("chk").onclick=()=>{
+  const bad=R3.filter((x,i)=>document.getElementById("p"+i).value!==x.a).length;
+  if(bad){document.getElementById("fb").innerHTML=`<div class="msg bad">${bad} sin acertar. Cada paso corresponde a un camino distinto.</div>`;return}
+  win(2,"Un mismo caso activa varias rutas a la vez y ninguna reemplaza a otra. La persona decide si acepta apoyo, pero tu obligación de reportar SEA y de proteger ante riesgo de daño no depende de eso.",R3.map(x=>x.w),end);
+ };
+}
+
+function win(i,text,details,next){
+ st.keys[i]=true;keys();
+ $(`<div class="msg ok">Reto superado</div><p>Tu compromiso ${i+1}:</p><div class="reward">${EMO[i]} ${WORDS[i]}</div><p>${esc(text)}</p>
+ ${details.length?`<details><summary>Por qué (lectura rápida)</summary>${list(details)}</details>`:""}
+ <div class="row"><button id="nx">Continuar ➜</button></div>`);
+ document.getElementById("nx").onclick=next;confetti(10);
+}
+
+function end(){
+ document.body.className="";
+ const d=new Date().toLocaleDateString("es",{day:"numeric",month:"long",year:"numeric"});
+ $(`${ILL.route}<h1>🧡 Ruta completa</h1><p class="lema">Escucha. Protege. Conecta.</p>
+ <div class="msg ok"><strong>Constancia</strong><br>${esc(st.name||"Participante")} completó Reto25N por el 25N el ${d}.</div>
+ <h2>🌅 Lo que haces desde hoy</h2>
+ <p>Elige al menos un compromiso para esta semana:</p>
+ ${COMPROMISOS.map(c=>`<label class="chk"><input type="checkbox"><span>${esc(c)}</span></label>`).join("")}
+ <p class="note">Este reto no guarda ni envía datos. Si quieres compartir tu constancia, toma una captura de pantalla.</p>`);
+ confetti(36);
+}
+keys();intro();
+</script>
+</body>
+</html>
