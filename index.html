@@ -77,7 +77,7 @@ const R1=[
  {t:"Preguntar si hay algún riesgo inminente o urgente – si está a salvo ahora o si necesita atención médica.",ok:1}
 ];
 const R2=[
- {t:"“¿Estás segura de que fue así?”",a:"Evita",w:"Revictimiza. Mejor: “Lamento que esto haya pasado”."},
+ {t:"“¿Estás segura de que fue así?”",a:"Evita",w:"Revictimiza."},
  {t:"“Lamento que esto te haya pasado.”",a:"Practica",w:"Reconoce lo vivido sin juzgar ni interrogar."},
  {t:"“Dime exactamente qué pasó, paso a paso.”",a:"Evita",w:"Es investigar, y puede hacerla revivir lo ocurrido."},
  {t:"“No tienes que contarme qué pasó para que te explique opciones de apoyo.”",a:"Practica",w:"Separa la ayuda de la obligación de dar detalles."},
@@ -87,9 +87,9 @@ const R2=[
 const PATHS=["Sospecha de SEA","Mejorar programa de WFP","Sobreviviente de violencia","Niña o niño"];
 const R3=[
  {t:"Explicarle tu obligación de reportar y qué información personal puede decidir revelar. Reportar al punto focal de PSEA y ofrecerle los apoyos organizacionales.",a:PATHS[0],w:"Sospecha de SEA: tu obligación de reportar no depende de que ella lo pida. Ella decide qué información personal revela."},
- {t:"Con su consentimiento, compartir lo ocurrido a través del CFM o para ajustar el programa, sin dar detalles que comprometan su confidencialidad.",a:PATHS[1],w:"Mejorar el programa: solo con consentimiento, y sin entregar detalles que la expongan."},
+ {t:"Con su consentimiento, compartir lo ocurrido a través del CFM para ajustar el programa, sin dar detalles que comprometan su confidencialidad.",a:PATHS[1],w:"Mejorar el programa: solo con consentimiento, y sin entregar detalles que la expongan."},
  {t:"Ofrecerle apoyo externo si ella lo desea. Es ella quien decide si lo busca. El propósito es apoyo y reparación.",a:PATHS[2],w:"Sobreviviente de violencia de género: siempre se ofrece apoyo, y siempre decide la persona."},
- {t:"Pedir el consentimiento de su madre si no está implicada, o el asentimiento de la niña si lo está. Si hay riesgo de daño, referir a las autoridades aun sin consentimiento ni asentimiento.",a:PATHS[3],w:"Niña o niño: consentimiento o asentimiento según quién esté implicado, y ante riesgo de daño se refiere siempre."}
+ {t:"Pedir el consentimiento de su madre si no está implicada, o el asentimiento de la niña si su madre está implicada. Si hay riesgo de daño, referir a las autoridades aun sin consentimiento ni asentimiento.",a:PATHS[3],w:"Niña o niño: consentimiento o asentimiento según quién esté implicado, y ante riesgo de daño se refiere siempre."}
 ];
 const COMPROMISOS=["Si una persona beneficiaria me pide ayuda, haré una pausa, buscaré privacidad y me presentaré.","Escucharé sin interrogar ni pedir detalles.","Conoceré la ruta de referencia, el canal de reporte y el CFM de mi oficina."];
 const ILL={
